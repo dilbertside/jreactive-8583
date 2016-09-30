@@ -15,14 +15,13 @@ import java.util.concurrent.TimeUnit;
 
 public class Iso8583Server<T extends IsoMessage>  extends AbstractIso8583Connector<ServerConfiguration, ServerBootstrap, T> {
 
-		public Iso8583Server(int port, MessageFactory<T> messageFactory, ServerConfiguration serverConfiguration) {
-	    super(serverConfiguration, messageFactory);
-	    setSocketAddress(new InetSocketAddress(port));
-		}
-		
-    public Iso8583Server(int port, MessageFactory<T> messageFactory) {
-        super(new ServerConfiguration(), messageFactory);
+    public Iso8583Server(int port, ServerConfiguration config,  MessageFactory<T> messageFactory) {
+        super(config, messageFactory);
         setSocketAddress(new InetSocketAddress(port));
+    }
+
+    public Iso8583Server(int port, MessageFactory<T> messageFactory) {
+        this(port, ServerConfiguration.newBuilder().build(), messageFactory);
     }
 
     public void start() throws InterruptedException {
